@@ -7,8 +7,8 @@ if __name__ == '__main__':
     # Daten aus der Datei 'data.csv' laden und Tabelle erstellen
     tabelle = Table('data/data.csv', hasHeader=True)
 
-    # Gibt die erste 5 Zeilen in der Konsole aus
+    # Gibt die ersten 5 Zeilen in der Konsole aus
     tabelle.peek(tabelle.shape[0])
 
-    # Erstellt ein Diagramm
+    # Plot erstelleb
     tabelle.plot()

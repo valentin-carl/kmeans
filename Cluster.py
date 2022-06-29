@@ -1,4 +1,4 @@
-import Table
+from Table import Table
 
 
 def kMeans(k: int, data: Table):
@@ -11,10 +11,10 @@ def kMeans(k: int, data: Table):
     #
     old, new = [], []
     while assignmentsDiffer():
-
+        new = assignToClusters(centoids, data)
         pass
 
-def assignToCluster(centroids, data):
+def assignToClusters(centroids: list, data: Table):
     pass
 
 def assignmentsDiffer(old, new):

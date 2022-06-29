@@ -25,6 +25,9 @@ class Table:
             for name in self.names:
                 print(name, '\t', end='')
             print()
+            for i in range(self.shape[1]):
+                print('===', end='')
+            print()
         for i in range(nRows):
             for value in self.row(i):
                 print(value, '\t', end='')
