@@ -30,3 +30,12 @@ def getTableNames(filename: str):
         r = csv.reader(csvfile)
         for row in r:
             return row
+
+def dist(x, y):
+    """
+    :return euclidian distance between x & y
+    """
+    sum = 0
+    for i in range(len(x)):
+        sum += (x[i]-y[i])**2
+    return sum**(0.5)

@@ -1,5 +1,5 @@
 from Table import Table
-
+from Utils import dist
 
 def kMeans(k: int, data: Table):
 
@@ -7,14 +7,52 @@ def kMeans(k: int, data: Table):
     centroids = []
     for i in range(k):
         pass
+        # TODO init random clusters or use argument => new function?
 
-    #
-    old, new = [], []
-    while assignmentsDiffer():
-        new = assignToClusters(centoids, data)
-        pass
+    # do k-means
+    old, rowClusterAssignments = None, []
+    while assignmentsDiffer(old, rowClusterAssignment):
+        # next iteration
+        old = rowClusterAssignments
+        rowClusterAssignments = assignToClusters(centoids, data)
+        clusters = generateClusters(rowClusterAssignments, k)
+        centroids = updateCentroids(clusters, data)
+    return clusters
+
+def randomCentroids(data):
+    # TODO
+    pass
 
 def assignToClusters(centroids: list, data: Table):
+    """
+    returns list of tuples, where each tuple is in the form (rowIndex, clusterIndex)
+    """
+    new = []
+    for i in range(data.shape[0]):
+        clusterIndex = 0
+        for j in range(len(centroids)):
+            if dist(data.row(i), centroids[j]) < dist(data.row(i),centroids[j]):
+                clusterIndex = j
+        new.append((i, clusterIndex))
+    return new
+
+def generateClusters(new, k):
+    """
+    generates list of clusters,
+    each cluster is a list of indices,
+    each index is an index of a row in table
+    """
+    clusters = [[] for x in range(k)]
+    for row in new:
+        clusters[row[1]].append(row[0])
+    return clusters
+
+def updateCentroids(clusters, data):
+    centroids = [mean([data.row(index) for index in cluster]) for cluster in clusters]
+    return centroids
+
+def plotClusters():
+    # TODO
     pass
 
 def assignmentsDiffer(old, new):
@@ -39,12 +77,3 @@ def mean(dataPoints):
             centroid[j] += dataPoints[i][j]
         centroid[j] /= n
     return tuple(centroid)
-
-def dist(x, y):
-    """
-    :return euclidian distance between x & y
-    """
-    sum = 0
-    for i in range(len(x)):
-        sum += (x[i]-y[i])**2
-    return sum**(0.5)
