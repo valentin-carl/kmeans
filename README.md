@@ -1,21 +1,21 @@
-# k-Means Clustering
+## k-Means Clustering
 
-## Einrichten
+### Einrichten
 
-### Repository herunterladen
+#### Repository herunterladen und virtual environment aktivieren
 
 ```{shell}
-git clone ...
+git clone git@github.com:valentin-carl/kmeans.git
 cd kmeans
 ```
 
-### virtual environment aktivieren
+#### virtual environment aktivieren
 ```{shell}
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements
 ```
 
-## k-Means benutzen
+### k-Means benutzen
 
-# TODO
+## TODO
