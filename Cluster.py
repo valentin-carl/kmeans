@@ -1,5 +1,7 @@
 from Table import Table
 from Utils import dist
+from random import randint
+
 
 def kMeans(k: int, data: Table):
 
@@ -19,9 +21,16 @@ def kMeans(k: int, data: Table):
         centroids = updateCentroids(clusters, data)
     return clusters
 
-def randomCentroids(data):
-    # TODO
-    pass
+def randomCentroids(data: Table, k: int) -> list:
+    centroids = []
+    mins = [data.min(i) for i in range(data.shape[1])]
+    maxs = [data.max(i) for i in range(data.shape[1])]
+    for i in range(k):
+        centroid = []
+        for j in range(data.shape[1]):
+            centroid.append(randint(mins[j], maxs[j]))
+        centroids.append(centroid)
+    return centroids
 
 def assignToClusters(centroids: list, data: Table):
     """
@@ -52,7 +61,7 @@ def updateCentroids(clusters, data):
     return centroids
 
 def plotClusters():
-    # TODO
+    # TODO plot clusters
     pass
 
 def assignmentsDiffer(old, new):
