@@ -3,13 +3,12 @@ from Utils import dist
 from random import randint
 
 
-def kMeans(k: int, data: Table):
+def kMeans(k: int, data: Table, initialCentroids = []):
 
     # get k random initial centroids
-    centroids = []
-    for i in range(k):
-        pass
-        # TODO init random clusters or use argument => new function?
+    centroids = initialCentroids
+    if centroids == []:
+        centroids = randomCentroids(data, k)
 
     # do k-means
     old, rowClusterAssignments = None, []
