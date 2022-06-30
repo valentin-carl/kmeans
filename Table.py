@@ -1,6 +1,7 @@
 import Utils
 import matplotlib.pyplot as plt
 
+
 class Table:
     def __init__(self, filename: str, addId = False, hasHeader = False):
         self.names = Utils.getTableNames(filename) if hasHeader else ['test']
@@ -45,3 +46,26 @@ class Table:
             j += 1
         plt.scatter([x[i] for x in self.data], [x[j] for x in self.data])
         plt.show()
+
+    def get(self, row, col):
+        return self.data[row][col]
+
+    def min(self, col):
+        """
+        :return: min value in column
+        """
+        min = self.get(0, col)
+        for row in self.data:
+            if row[col] < min:
+                min = row[col]
+        return min
+
+    def max(self, col):
+        """
+        :return: max value in column
+        """
+        max = self.get(0, col)
+        for row in self.data:
+            if row[col] > max:
+                max = row[col]
+        return max
