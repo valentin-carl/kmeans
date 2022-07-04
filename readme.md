@@ -18,4 +18,11 @@ pip install -r requirements
 
 ### k-Means benutzen
 
-## TODO
+
+#### Distanzfunktion anpassen
+
+
+#### Stopkriterium anpassen
+
+
+#### Daten anpassen

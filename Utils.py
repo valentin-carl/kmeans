@@ -1,41 +1,47 @@
-import csv
+import csv, re
+from matplotlib import pyplot as plt
+from Clustering import updateCentroids
 
 
-def readCsv(filename: str, addId: bool, hasHeader: bool):
-    """
-    reads data from filename and creates list of tuples, skips header if exists
-    use addId to create rowID as first entry in each tuple
-    """
+def loadData(filename):
     data = []
-    with open(filename, newline='') as csvfile:
-        r = csv.reader(csvfile)
-        readHeaders = False
-        rowID = 0
-        for row in r:
-            if not readHeaders and hasHeader:
-                readHeaders = True
-            else:
-                newRow = [rowID] if addId else []
-                for x in row:
-                    newRow.append(int(x))
-                data.append(tuple(newRow))
-                rowID += 1
+    with open(filename) as csvfile:
+        reader = csv.reader(csvfile)
+        readFirstLine = False
+        for row in reader:
+            if not readFirstLine:
+                if re.search("\D", row[0][0]):
+                    continue
+            new_row = []
+            for number in row:
+                if re.search("\s", number[0]):
+                    new_row.append(float(number[1:]))
+                else:
+                    new_row.append(float(number))
+            data.append(new_row)
     return data
+    
+def printTable(data, nrow = 5):
+    for i in range(nrow):
+        for j in range(len(data[0])):
+            print(data[i][j], "\t", end="")
+        print()
 
-def getTableNames(filename: str):
-    """
-    reads first line of csv file 'filename' and returns as list
-    """
-    with open(filename, newline='') as csvfile:
-        r = csv.reader(csvfile)
-        for row in r:
-            return row
-
-def dist(x, y):
-    """
-    :return euclidian distance between x & y
-    """
-    sum = 0
-    for i in range(len(x)):
-        sum += (x[i]-y[i])**2
-    return sum**(0.5)
+def plotClusters(clusters, data):
+    clusterAssignments = []
+    for row in data:
+        assignedCluster = 0
+        for clusterIndex in range(len(clusters)):
+            if row in clusters[clusterIndex]:
+                assignedCluster = clusterIndex
+                break
+        clusterAssignments.append(assignedCluster)
+    x = [row[0] for row in data]
+    y = [row[1] for row in data]
+    plt.scatter(x, y, c=clusterAssignments)
+    centroids = updateCentroids(clusters)
+    a = [row[0] for row in centroids]
+    b = [row[1] for row in centroids]
+    plt.scatter(a, b, marker = "x")
+    plt.show()
+    
