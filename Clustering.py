@@ -1,4 +1,4 @@
-from Utils import loadData, plotClusters
+from Utils import loadData, plotClusters, updateCentroids
 from random import randint
 
 
@@ -33,7 +33,7 @@ def randomCentroids(k, data):
                 maxs[j] = row[j]
                 
     # return list of centroids with random values between min and max in each dimension
-    return [[randint(mins[j], maxs[j]) for j in range(len(data[0]))] for i in range(k)]
+    return [[randint(int(mins[j]), int(maxs[j])) for j in range(len(data[0]))] for i in range(k)]
 
 def generateClusters(centroids, data):
     """
@@ -55,30 +55,6 @@ def generateClusters(centroids, data):
     
     # return clusters
     return clusters
-
-def updateCentroids(newClusters):
-    """
-    calculates centroids for clusters in newClusters list
-    """
-    # find dimensions in data & number of clusters
-    dim = len(newClusters[0][0])
-    nClusters = len(newClusters)
-    
-    # for each cluster, get mean value of points within cluster
-    centroids = [[0 for i in range(dim)] for j in range(nClusters)]
-    for clusterIndex in range(nClusters):
-        
-        # add value of each value in each point of cluster
-        for pointIndex in range(len(newClusters[clusterIndex])):
-            for valueIndex in range(dim):
-                centroids[clusterIndex][valueIndex] += newClusters[clusterIndex][pointIndex][valueIndex]
-        
-        # divide by number of points in cluster to get average values
-        for clusterValueIndex in range(dim):
-            centroids[clusterIndex][clusterValueIndex] /= len(newClusters[clusterIndex])
-            
-    # return new clusters
-    return centroids
 
 def kmeans(k, filename):
     """
@@ -110,7 +86,7 @@ if __name__ == "__main__":
     # parameters
     filename = "data.csv"
     data = loadData(filename)
-    k = 2
+    k = 8
     
     # generate clusters and plot
     clusters = kmeans(k, filename)

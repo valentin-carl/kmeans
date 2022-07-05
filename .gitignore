@@ -4,3 +4,4 @@ venv
 __pycache__
 todo.txt
 .ipynb_checkpoints
+data2.csv
